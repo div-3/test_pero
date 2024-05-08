@@ -11,7 +11,9 @@ public class Product {
     private SelenideElement writeButton = $(By.xpath("//button[contains(., 'Написать')]"));
     private ElementsCollection avatarList = $$(By.className("vkuiImageBase__img"));
     private SelenideElement aboutSupplierName = $(By.className("MarketItemCardShopInfo__label"));
-    private SelenideElement supplierName = $(By.className("ItemAuthor-module__categoryLink--RLlov"));
+//    private SelenideElement supplierName = $(By.className("ItemAuthor-module__categoryLink--RLlov"));
+    private SelenideElement supplierName = $(By.cssSelector("[class='ItemAuthor-module__label.*'"));
+//    private SelenideElement supplierName = $(By.xpath("//a[contains(@class, 'vkuiLink')]"));
 
     public Message writeSupplier(){
         writeButton.click();
