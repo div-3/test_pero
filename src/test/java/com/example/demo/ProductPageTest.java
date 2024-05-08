@@ -1,10 +1,13 @@
 package com.example.demo;
 
 import com.codeborne.selenide.Configuration;
+import com.example.demo.page.Message;
+import com.example.demo.page.Product;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.junit.jupiter.api.*;
 
 import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ProductPageTest {
     @BeforeAll
@@ -22,4 +25,14 @@ public class ProductPageTest {
     public void search() throws InterruptedException {
         Thread.sleep(1_000);
     }
+
+    @Test
+    public void shouldOpenDialogueWindowOnWriteButton(){
+        Product product = new Product();
+        assertTrue(product.checkPage());
+//        Message message = product.writeSupplier();
+//        assertTrue(message.checkPage());
+    }
+
+
 }
