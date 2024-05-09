@@ -1,6 +1,6 @@
 package com.example.demo.page;
 
-import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
@@ -8,16 +8,22 @@ import java.util.ArrayList;
 
 import static com.codeborne.selenide.Selenide.$;
 
-public class Shop {
+public class Market {
     private SelenideElement supplierName = $(By.cssSelector("a.ui_crumb"));
+    private SelenideElement productCount = $("#market_items_count");
 
     public boolean checkPage() {
-        Configuration.timeout = 6000;
         ArrayList<SelenideElement> errors = new ArrayList<>();
+
         boolean ok = true;
 
-        if (!supplierName.isDisplayed())      { ok = false; errors.add(supplierName);     }
+        if (!supplierName.shouldBe(Condition.visible).isDisplayed())      { ok = false; errors.add(supplierName);     }
+        if (!productCount.shouldBe(Condition.visible).isDisplayed())      { ok = false; errors.add(productCount);     }
         return ok;
+    }
+
+    public SelenideElement getProductCount() {
+        return productCount;
     }
 
     public SelenideElement getSupplierName() {

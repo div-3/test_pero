@@ -1,20 +1,50 @@
 package com.example.demo.page;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
+import java.util.ArrayList;
+
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 
 public class Club {
-    private SelenideElement writeButton = $(By.xpath("//button[contains(., 'Написать')]")).should(Condition.exist);
-    private SelenideElement subscribeIconButton = $(By.xpath("//button[contains(@class, 'ItemAuthor-module__iconSubscribe')]")).should(Condition.exist);
-    private SelenideElement subscribeButton = $(By.className("MarketItemCardShopInfo__buttonToggleSubscribeGroup")).should(Condition.exist);
-    private SelenideElement goToShopButton = $(By.className("MarketItemCardShopInfo__buttonGoToShop")).should(Condition.exist);
-    private ElementsCollection avatarList = $$(By.className("vkuiImageBase__img"));
-    private SelenideElement aboutSupplierName = $(By.className("MarketItemCardShopInfo__label")).should(Condition.exist);
-    private SelenideElement supplierName = $(By.xpath("//a[contains(@class, 'ItemAuthor-module__label')]")).should(Condition.exist);
-    private SelenideElement itemGalleryMainImage = $(By.className("ItemGallery__main")).should(Condition.exist);
+
+    private SelenideElement showAllLink = $(By.xpath("//a[@data-role='show-all']"));
+    private SelenideElement showAllWithProductCounterText = $(By.xpath("//a[@data-role='show-all']//span[contains(@class, 'FlatButton__content')]"));
+    private SelenideElement supplierName = $(By.className("page_name"));
+    private Integer productCounter;
+
+    public Market goToMarket() {
+        showAllLink.scrollIntoView(true).click();
+        return new Market();
+    }
+
+    public Integer getProductCounter() {
+        productCounter = Integer.parseInt(showAllWithProductCounterText.getText().split(" ")[2]);
+        return productCounter;
+    }
+
+    public boolean checkPage() {
+        ArrayList<SelenideElement> errors = new ArrayList<>();
+        boolean ok = true;
+
+        if (!showAllLink.shouldBe(Condition.visible).isDisplayed())      { ok = false; errors.add(showAllLink);   }
+        if (!supplierName.shouldBe(Condition.visible).isDisplayed())         { ok = false; errors.add(supplierName);      }
+
+        if (!ok) System.out.println("Errors on Product Page: " + errors);
+        return ok;
+    }
+
+    public SelenideElement getShowAllLink() {
+        return showAllLink;
+    }
+
+    public SelenideElement getSupplierName() {
+        return supplierName;
+    }
+
+    public SelenideElement getShowAllWithProductCounterText() {
+        return showAllWithProductCounterText;
+    }
 }
